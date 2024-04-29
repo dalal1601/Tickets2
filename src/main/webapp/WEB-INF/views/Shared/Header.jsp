@@ -12,7 +12,9 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img style="width: 100px" src="path_to_your_logo_image" alt="Logo"></a>
+            <div class="row justify-content-center">
+                <a class="navbar-brand" href="/home"><img style="width: 100px" src="/images/logo.png" alt="Logo"></a>
+            </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -24,12 +26,25 @@
                         <a class="nav-link text-dark" href="/">Home</a>
                     </li>
                 </ul>
+
+                <!-- Search bar -->
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+                <!-- Cart button -->
+                <a href="#" class="btn btn-outline-dark mx-2">
+                    <i class="bi bi-cart-fill"></i>
+                    Cart
+                </a>
             </div>
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Menu</button>
-
         </div>
     </nav>
 </header>
+
+
 
 <div style="height: 10vh" class="container ">
     <div role="main" class="pb-3">

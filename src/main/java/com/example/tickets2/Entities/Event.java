@@ -1,10 +1,7 @@
 package com.example.tickets2.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,9 +21,14 @@ public class Event {
     private String eventName;
     private String place;
     private String description;
+    private String imageUrl;
+
 
     @ManyToOne
     private  Category category;
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+
     private List<Ticket> ticketList = new ArrayList<>();
+
+
 }

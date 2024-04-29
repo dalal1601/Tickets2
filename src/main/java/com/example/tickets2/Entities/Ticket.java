@@ -23,8 +23,10 @@ public class Ticket {
     private String ticket;
     private Double price;
     private Date createAt;
-
+    private int quantity;
     private TicketState ticketState = TicketState.Available;
+
+
 
     @ManyToOne
     private  Event event;
