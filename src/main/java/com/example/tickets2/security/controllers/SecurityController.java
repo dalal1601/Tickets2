@@ -9,4 +9,13 @@ public class SecurityController {
     public String home(){
         return "redirect:/home";
     }
+    @GetMapping("/accessDenied")
+    public String accessDenied(){
+        return "/AccessDenied";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "/Login";
+    }
+
 }

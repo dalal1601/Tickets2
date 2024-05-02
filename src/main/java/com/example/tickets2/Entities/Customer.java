@@ -24,6 +24,7 @@ public class Customer {
     private String email;
     private String address;
 
+
     private CustomerState customerState = CustomerState.New;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)

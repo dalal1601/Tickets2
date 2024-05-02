@@ -1,9 +1,9 @@
+<!-- Event Detail Page -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Events</title>
+    <title>Event Details</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
@@ -16,34 +16,49 @@
                     <h1 class="card-title">Event Details</h1>
                 </div>
                 <div class="card-body">
+                    <!-- Event Information -->
                     <img th:src="${event.imageUrl}" class="img-fluid" alt="Event Image">
                     <div class="mb-3">
-                        <strong>Event Name:</strong> <h5 class="card-title" th:text="${event.eventName}"></h5>
+                        <strong>Event Name:</strong> <span th:text="${event.eventName}"></span>
                     </div>
                     <div class="mb-3">
-                        <strong>Event Date:</strong> <h5 class="card-title" th:text="${event.dateEvent}"></h5>
-
+                        <strong>Event Date:</strong> <span th:text="${event.dateEvent}"></span>
                     </div>
                     <div class="mb-3">
-                        <strong>Event Location:</strong><h5 class="card-title" th:text="${event.place}"></h5>
+                        <strong>Event Location:</strong> <span th:text="${event.place}"></span>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <strong>Event Description:</strong>
-                        <h5 class="card-title" th:text="${event.description}"></h5>
+                        <span th:text="${event.description}"></span>
+                    </div>
+                    <!-- Ticket Information -->
+                    <div th:if="${not #lists.isEmpty(tickets)}">
+                        <div th:each="ticket : ${tickets}">
+                            <div class="mb-3">
+                                <strong>Ticket Price:</strong> <span th:text="${ticket.price}"></span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Availability:</strong>
+                                <div th:text="${ticket.ticketState}"></div>
+
+                                <input type="hidden" name="ticketId" th:value="${ticket.id}">
+                                <button type="submit" class="btn btn-primary">Buy Ticket</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div th:if="${#lists.isEmpty(tickets)}">
+                        <div class="alert alert-warning" role="alert">Tickets are not available for this event.</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Iterate over the list of tickets and display their information -->
-
-
 <div th:replace="~{Shared/Footer :: footer}"></div>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>
-
-

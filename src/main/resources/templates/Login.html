@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<main class="container mt-5">
+    <div class="p-1 text-center bg-light">
+        <h1 class="mb-3">Login</h1>
+    </div>
+    <form th:action="@{login}" method="post">
+
+
+        <div class="form-group">
+            <label for="username" class="form-label"><b>Username</b></label>
+            <input type="text" id="username" class="form-control" placeholder="Enter Username" name="username" required>
+
+            <label for="password" class="form-label"><b>Password</b></label>
+            <input type="password" id="password" class="form-control" placeholder="Enter Password" name="password" required>
+
+            <button type="submit" class="form-control btn btn-primary ">Login</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+        <!--
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div> -->
+    </form>
+</main>
+
+
+
+</body>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

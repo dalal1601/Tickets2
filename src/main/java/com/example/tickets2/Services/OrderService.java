@@ -12,4 +12,6 @@ public interface OrderService {
     OrderT updateItemInCart(Ticket ticket, int quantity, Customer customer);
 
     OrderT deleteItemFromCart(Ticket ticket, Customer customer);
+    public OrderT getCurrentOrder(Customer customer);
+    double getTotalPrice(OrderT order);
 }

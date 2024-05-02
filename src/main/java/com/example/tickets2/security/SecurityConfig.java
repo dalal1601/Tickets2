@@ -20,18 +20,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .formLogin(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         authCustomizer -> authCustomizer
                                 .requestMatchers("/home","/createEvent","/editEvent","/crudEvent").hasRole("ADMIN")
                                 .requestMatchers("/home","/detailsEvent").hasAnyRole("GUEST","ADMIN","USER")
+                                .requestMatchers("/login","/webjars/**").permitAll()
                                 .anyRequest().authenticated()
+
                 )
+                .formLogin(
+                        formLogin -> formLogin
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/")
+                )
+               // .exceptionHandling(e->e.accessDeniedPage("accessDenied"))
         .build();
 
     }
-    @Bean
+    //@Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         return new InMemoryUserDetailsManager(
                 User.withUsername("admin").password(bCryptPasswordEncoder().encode("123")).roles("ADMIN","USER").build(),

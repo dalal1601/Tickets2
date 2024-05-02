@@ -111,4 +111,21 @@ public class OrderServiceImpl implements OrderService{
         // Save or update OrderT
         return orderRepository.save(orderT);
     }
+
+    @Override
+    public OrderT getCurrentOrder(Customer customer) {
+        // Find the current order for the customer with 'New' order state
+        return orderRepository.findByCustomerAndOrderState(customer, OrderState.New);
+    }
+    @Override
+    public double getTotalPrice(OrderT order) {
+        double totalPrice = 0.0;
+
+        // Iterate over the order details and calculate the total price
+        for (OrderDetail orderDetail : order.getOrderDetailList()) {
+            totalPrice += orderDetail.getQuantity() * orderDetail.getTicket().getPrice();
+        }
+
+        return totalPrice;
+    }
 }

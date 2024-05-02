@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="~{Shared/Header :: header}"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h1 class="card-title">Shopping Cart</h1>
+                </div>
+                <div class="card-body">
+                    <!-- Display selected items in the cart -->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${cartItems}">
+                            <td th:text="${item.eventName}"></td>
+                            <td th:text="${item.price}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- Display total price -->
+                    <div>Total Price: <span th:text="${totalPrice}"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{Shared/Footer :: footer}"></div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

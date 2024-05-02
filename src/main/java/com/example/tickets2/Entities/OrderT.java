@@ -32,5 +32,18 @@ public class OrderT {
     @ManyToOne
     private Customer customer;
 
+    public double getTotalPrice() {
+        double totalPrice = 0.0;
+        List<OrderDetail> orderDetails = this.getOrderDetailList();
+
+        for (OrderDetail orderDetail : orderDetails) {
+            totalPrice += orderDetail.getQuantity() * orderDetail.getTicket().getPrice();
+        }
+
+        return totalPrice;
+    }
+
+
+
 
 }
