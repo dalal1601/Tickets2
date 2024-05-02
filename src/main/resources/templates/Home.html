@@ -5,26 +5,60 @@
     <meta charset="UTF-8">
     <title>Events</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <style>
+        /* Style for the horizontal scrollable container */
+        .scrollmenu {
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: #333;
+            width: 100%;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Style for individual category items */
+        .scrollmenu a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .scrollmenu a:hover {
+            background-color: #777;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{Shared/Header :: header}"></div>
+
+<!-- Horizontal scrollable container for categories -->
+<div class="scrollmenu mt-4">
+    <!-- Adjusted links with query parameters -->
+    <a href="/">All</a>
+    <a th:each="category : ${categories}" th:href="@{'/?categoryId=' + ${category.id}}" th:text="${category.categoryName}"></a>
+</div>
+
 <div class="container">
     <h1 class="mt-5">Events</h1>
     <div class="row mt-4">
-        <div th:each="event : ${eventsVue}" class="col-md-4">
+        <div th:each="event : ${eventsVue}" class="col-md-4 event-card" th:data-category-id="${event.category.id}">
             <div class="card mb-4 shadow-sm">
-
-
                 <img th:src="${event.imageUrl}" class="card-img-top" alt="Event Image">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${event.eventName}"></h5>
                     <p class="card-text" th:text="'Date: '+${event.dateEvent}"></p>
                     <p class="card-text" th:text="'Location: '+${event.place}"></p>
+                    <p class="card-text" th:text="'category: '+${event.category.categoryName}"></p>
                     <!-- Add more event details as needed -->
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a th:href="@{/detailsEvent(eventId=${event.id})}">View Details</a>
-
                         </div>
                     </div>
                 </div>
@@ -34,7 +68,27 @@
 </div>
 <div th:replace="~{Shared/Footer :: footer}"></div>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    $(document).ready(function () {
+        // Event listener for category links
+        $(".scrollmenu a").click(function (e) {
+            e.preventDefault(); // Prevent the default link behavior
+            var categoryId = $(this).attr("href").split("=")[1]; // Extract the category ID from the URL
+            $(".event-card").hide(); // Hide all event cards
+
+            if (categoryId === "") {
+                $(".event-card").show(); // Show all event cards if the category is empty
+            } else {
+                $(".event-card").each(function () {
+                    if ($(this).data("category-id") == categoryId) { // Change comparison to loose equality
+                        $(this).show(); // Show event cards with the selected category ID
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

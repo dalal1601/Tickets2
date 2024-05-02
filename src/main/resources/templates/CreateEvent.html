@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Event</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="~{Shared/Header :: header}"></div>
+
+<h1>Create Event</h1>
+
+<form th:action="@{/saveEvent}" method="post">
+    <label for="eventName">Event Name:</label>
+    <input type="text" id="eventName" name="eventName" required><br>
+    <label for="eventDate">Event Date:</label>
+    <input type="date" id="eventDate" name="eventDate" required><br>
+    <label for="place">Place:</label>
+    <input type="text" id="place" name="place" required><br>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description"><br>
+    <label for="imageUrl">Image URL:</label>
+    <input type="text" id="imageUrl" name="imageUrl"><br>
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+        <!-- Iterate over categories and populate the dropdown -->
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+    </select><br>
+
+    <!-- Hidden input field to hold the formatted date value -->
+    <input type="hidden" id="formattedDate" name="formattedDate">
+
+    <!-- CSRF token -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <button type="submit" value="save" class="btn btn-primary">Create Event</button>
+</form>
+
+<div th:replace="~{Shared/Footer :: footer}"></div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    // JavaScript to format and set the value of the hidden input field
+    document.getElementById('eventDate').addEventListener('change', function() {
+        var date = new Date(this.value);
+        var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) + 'T' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
+        document.getElementById('formattedDate').value = formattedDate;
+    });
+</script>
+<script>
+    // JavaScript to format and set the value of the hidden input field
+    document.getElementById('eventDate').addEventListener('change', function() {
+        var date = new Date(this.value);
+        var formattedDate = date.toISOString().split('T')[0]; // Format as yyyy-MM-dd
+        document.getElementById('formattedDate').value = formattedDate;
+    });
+</script>
+
+</body>
+</html>

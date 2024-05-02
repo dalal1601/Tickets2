@@ -1,24 +1,29 @@
 package com.example.tickets2.Controllers;
 
-import ch.qos.logback.core.model.Model;
 import com.example.tickets2.Entities.Category;
-import com.example.tickets2.Entities.Customer;
+import org.springframework.ui.Model;
 import com.example.tickets2.Entities.Event;
 import com.example.tickets2.Entities.Ticket;
+import com.example.tickets2.Repositories.CategoryRepository;
+import com.example.tickets2.Repositories.EventRepository;
+import com.example.tickets2.Services.EventService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import com.example.tickets2.Services.EventService;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.AttributedString;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
 public class HomeController {
     private EventService eventService;
+    @Autowired
+    private EventRepository eventRepository;
 
     @RequestMapping("/home")
     public String home(ModelMap modelMap) {
@@ -27,6 +32,8 @@ public class HomeController {
 
         // Add the list of events to the model
         modelMap.addAttribute("eventsVue",eventsController);
+        List<Category> categories = categoryRepository.findAll(); // Fetch all categories
+        modelMap.addAttribute("categories", categories);
 
         // Return the view name
         return "Home";
@@ -47,6 +54,61 @@ public class HomeController {
         return "DetailsEvent";
     }
 
+    ///////////////////////////////////////////////////////////////
+    @GetMapping("/crudEvent")
+    public String crudEventPage(ModelMap modelMap) {
+        List<Event> events = eventService.getAllEvents();
+        modelMap.addAttribute("eventsVue", events);
+        return "CrudEvent";
+    }
+
+    private final CategoryRepository categoryRepository; // Assuming you have a CategoryRepository
+
+
+    @RequestMapping("/createEvent")
+    public String createCustomer(ModelMap model){
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("eventVue", new Event()); // Assuming you have a model attribute for the event
+        return "CreateEvent";
+    }
+    @RequestMapping("/saveEvent")
+    public String saveEvent(@ModelAttribute("eventVue") Event eventController, @RequestParam("eventDate") String dateString){
+        // Parse the dateString into a LocalDate object
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+
+        // Set the parsed date to the event object
+        eventController.setDateEvent(date.atStartOfDay());
+
+        // Save the event and handle other operations as needed
+        Event savedEvent = eventService.save(eventController);
+
+        // Redirect or return a view accordingly
+        return "CreateEvent";
+    }
+
+    @RequestMapping(value = "/editEvent", method = RequestMethod.GET)
+    public String editEvent(@RequestParam("id") Long id, ModelMap modelMap) {
+        Event event = eventRepository.findById(id).orElse(null);
+
+        List<Category> categories = categoryRepository.findAll(); // Fetch all categories
+        modelMap.addAttribute("event", event);
+        modelMap.addAttribute("categories", categories);
+        return "EditEvent";
+    }
+
+    @RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
+    public String updateEvent(@ModelAttribute("event") Event event) {
+        eventRepository.save(event);
+        return "redirect:/"; // Redirect to home page or any other page after updating
+    }
+
+    @GetMapping("/deleteEvent")
+    public String deleteEvent(@RequestParam("id") Long id) {
+        eventService.deleteEventById(id);
+        return "redirect:/crudEvent";
+    }
 
 
 

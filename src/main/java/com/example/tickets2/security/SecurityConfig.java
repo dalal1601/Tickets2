@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         authCustomizer -> authCustomizer
-                                .requestMatchers("/home").hasRole("ADMIN")
+                                .requestMatchers("/home","/createEvent","/editEvent","/crudEvent").hasRole("ADMIN")
                                 .requestMatchers("/home","/detailsEvent").hasAnyRole("GUEST","ADMIN","USER")
                                 .anyRequest().authenticated()
                 )
