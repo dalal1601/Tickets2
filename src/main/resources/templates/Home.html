@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div th:replace="~{Shared/Header :: header}"></div>
+<div class="container">
+    <h1 class="mt-5">Events</h1>
+    <div class="row mt-4">
+        <div th:each="event : ${eventsVue}" class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+
+
+                <img th:src="${event.imageUrl}" class="card-img-top" alt="Event Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${event.eventName}"></h5>
+                    <p class="card-text" th:text="'Date: '+${event.dateEvent}"></p>
+                    <p class="card-text" th:text="'Location: '+${event.place}"></p>
+                    <!-- Add more event details as needed -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a th:href="@{/detailsEvent(eventId=${event.id})}">View Details</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{Shared/Footer :: footer}"></div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

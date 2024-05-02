@@ -45,7 +45,6 @@ public class HomeController {
 
         // Return the view name for the DetailsEvent.jsp page
         return "DetailsEvent";
-
     }
 
 
