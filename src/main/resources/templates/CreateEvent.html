@@ -9,32 +9,48 @@
 <div th:replace="~{Shared/Header :: header}"></div>
 
 <h1>Create Event</h1>
-
-<form th:action="@{/saveEvent}" method="post">
-    <label for="eventName">Event Name:</label>
-    <input type="text" id="eventName" name="eventName" required><br>
-    <label for="eventDate">Event Date:</label>
-    <input type="date" id="eventDate" name="eventDate" required><br>
-    <label for="place">Place:</label>
-    <input type="text" id="place" name="place" required><br>
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description"><br>
-    <label for="imageUrl">Image URL:</label>
-    <input type="text" id="imageUrl" name="imageUrl"><br>
-    <label for="category">Category:</label>
-    <select id="category" name="category" required>
-        <!-- Iterate over categories and populate the dropdown -->
-        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
-    </select><br>
-
-    <!-- Hidden input field to hold the formatted date value -->
-    <input type="hidden" id="formattedDate" name="formattedDate">
-
-    <!-- CSRF token -->
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-    <button type="submit" value="save" class="btn btn-primary">Create Event</button>
-</form>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create Event</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="/saveEvent" method="post">
+                <div class="form-group">
+                    <label for="eventName">Event Name</label>
+                    <input type="text" class="form-control" id="eventName" name="eventName" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Event Date</label>
+                    <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="place">Place</label>
+                    <input type="text" class="form-control" id="place" name="place" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">Image URL</label>
+                    <input type="text" class="form-control" id="imageUrl" name="imageUrl">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category" name="category" required>
+                        <option value="" disabled selected>Select category...</option>
+                        <!-- Iterate over categories and populate the dropdown -->
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                    </select>
+                </div>
+                <!-- Hidden input field to hold the formatted date value -->
+                <input type="hidden" id="formattedDate" name="formattedDate">
+                <!-- CSRF token -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn btn-primary btn-block">Create Event</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div th:replace="~{Shared/Footer :: footer}"></div>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -56,6 +72,7 @@
         document.getElementById('formattedDate').value = formattedDate;
     });
 </script>
+
 
 </body>
 </html>

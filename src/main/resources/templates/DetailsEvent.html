@@ -1,55 +1,96 @@
-<!-- Event Detail Page -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Details</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .event-image {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .event-info {
+            margin-bottom: 20px;
+        }
+
+        .ticket-info {
+            margin-top: 30px;
+        }
+
+        .btn-buy-ticket {
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .btn-buy-ticket:hover {
+            background-color: #218838;
+        }
+
+        .alert-warning {
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{Shared/Header :: header}"></div>
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-header">
-                    <h1 class="card-title">Event Details</h1>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1 class="card-title mb-0">Event Details</h1>
                 </div>
                 <div class="card-body">
                     <!-- Event Information -->
-                    <img th:src="${event.imageUrl}" class="img-fluid" alt="Event Image">
-                    <div class="mb-3">
-                        <strong>Event Name:</strong> <span th:text="${event.eventName}"></span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Event Date:</strong> <span th:text="${event.dateEvent}"></span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Event Location:</strong> <span th:text="${event.place}"></span>
-                    </div>
-                    <div class="mb-3">
-                        <strong>Event Description:</strong>
-                        <span th:text="${event.description}"></span>
+                    <img th:src="${event.imageUrl}" class="img-fluid event-image mb-4" alt="Event Image">
+                    <div class="event-info">
+                        <p><strong>Event Name:</strong> <span th:text="${event.eventName}"></span></p>
+                        <p><strong>Event Date:</strong> <span th:text="${event.dateEvent}"></span></p>
+                        <p><strong>Event Location:</strong> <span th:text="${event.place}"></span></p>
+                        <p><strong>Event Description:</strong></p>
+                        <p th:text="${event.description}"></p>
                     </div>
                     <!-- Ticket Information -->
-                    <div th:if="${not #lists.isEmpty(tickets)}">
-                        <div th:each="ticket : ${tickets}">
-                            <div class="mb-3">
-                                <strong>Ticket Price:</strong> <span th:text="${ticket.price}"></span>
-                            </div>
-                            <div class="mb-3">
-                                <strong>Availability:</strong>
-                                <div th:text="${ticket.ticketState}"></div>
-
+                    <div class="ticket-info">
+                        <div th:if="${not #lists.isEmpty(tickets)}">
+                            <h3 class="mb-3">Ticket Information</h3>
+                            <div th:each="ticket : ${tickets}" class="mb-3">
+                                <p><strong>Ticket Price:</strong> <span th:text="${ticket.price}"></span></p>
+                                <p><strong>Availability:</strong> <span th:text="${ticket.ticketState}"></span></p>
                                 <input type="hidden" name="ticketId" th:value="${ticket.id}">
-                                <button type="submit" class="btn btn-primary">Buy Ticket</button>
-
+                                <button type="submit" class="btn btn-buy-ticket" id="buyTicketBtn" th:attr="data-ticketId=${ticket.id}" >Buy Ticket</button>
                             </div>
-
                         </div>
-                    </div>
-                    <div th:if="${#lists.isEmpty(tickets)}">
-                        <div class="alert alert-warning" role="alert">Tickets are not available for this event.</div>
+                        <div th:if="${#lists.isEmpty(tickets)}">
+                            <div class="alert alert-warning" role="alert">Tickets are not available for this event.</div>
+                        </div>
                     </div>
                 </div>
             </div>

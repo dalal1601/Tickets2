@@ -13,8 +13,8 @@
             background-color: #333;
             width: 100%;
             padding: 10px 0;
-            position: sticky;
-            top: 0;
+            position: fixed;
+            top: 60px; /* Align it below the fixed header */
             z-index: 1000;
         }
 
@@ -32,24 +32,40 @@
         .scrollmenu a:hover {
             background-color: #777;
         }
+        /* Adjust header position to make space for the category bar */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff; /* Change this to your desired header background color */
+            z-index: 1001; /* Make sure it's higher than the category bar */
+        }
+
+        /* Adjust body padding to prevent content from being hidden under the fixed header */
+        body {
+            padding-top: 120px; /* Adjust this value to match the combined height of the header and category bar */
+        }
+
     </style>
+
 </head>
 <body>
-<div th:replace="~{Shared/Header :: header}"></div>
-
+<header>
+    <div th:replace="~{Shared/Header :: header}"></div>
+</header>
 <!-- Horizontal scrollable container for categories -->
 <div class="scrollmenu mt-4">
-    <!-- Adjusted links with query parameters -->
-    <a href="/">All</a>
+    <!--<a href="/">All</a>-->
     <a th:each="category : ${categories}" th:href="@{'/?categoryId=' + ${category.id}}" th:text="${category.categoryName}"></a>
 </div>
 
+
 <div class="container">
     <h1 class="mt-5">Events</h1>
-    <div class="row mt-4">
+    <div class="row mt-4 ">
         <div th:each="event : ${eventsVue}" class="col-md-4 event-card" th:data-category-id="${event.category.id}">
-            <div class="card mb-4 shadow-sm">
-                <img th:src="${event.imageUrl}" class="card-img-top" alt="Event Image">
+            <div class="card mb-4 shadow-sm" style=" height: 450px;">
+                <img th:src="${event.imageUrl}" class="card-img-top" alt="Event Image" style="width: 100%; height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${event.eventName}"></h5>
                     <p class="card-text" th:text="'Date: '+${event.dateEvent}"></p>
