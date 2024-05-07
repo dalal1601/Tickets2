@@ -11,5 +11,6 @@ public interface AccountService {
     void addRoleToUser(String username, String newRole);
     void removeRoleFromUser(String username, String newRole);
     User loadUserByUsername(String username);
+    public User findByUsername(String username);
 
 }

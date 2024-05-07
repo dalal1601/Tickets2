@@ -13,7 +13,7 @@ import com.example.tickets2.Entities.OrderDetail;
 @RequestMapping("/cart")
 public class TicketController {
 
-    private final OrderService orderService;
+    /*private final OrderService orderService;
 
     public TicketController(OrderService orderService) {
         this.orderService = orderService;
@@ -31,4 +31,6 @@ public class TicketController {
         // Return the view name for cart.html
         return "Cart";
     }
+    */
+
 }

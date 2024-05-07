@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Data // pour generer automatiquement getters, setters, equals(), hashCode() et toString()
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder //pour la création d'objets
 
 public class Category {
     @Id
@@ -22,6 +22,6 @@ public class Category {
     private String categoryName;
 
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY) //à la demande,( reduire la charge sur la base)les événements ne sont chargés de manière paresseuse que lorsque cela est nécessaire.
     private List<Event> eventList = new ArrayList<>();
 }

@@ -74,4 +74,8 @@ public class AccountServiceImpl implements  AccountService{
 
         return userRepository.findByUsername(username);
     }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

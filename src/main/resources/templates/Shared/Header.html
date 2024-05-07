@@ -13,6 +13,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+
                     <li class="nav-item" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                         <a class="nav-link" href="/crudEvent">Admin</a>
                     </li>
@@ -23,13 +24,17 @@
                             <i class="bi bi-cart3"></i> Cart
                         </a>
                     </li>
+
+                        <a class="nav-link" href="/profile">Profile</a> <!-- Link to the user profile page -->
+                        <!-- Add other dropdown items as needed -->
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             <i class="bi bi-person"></i> <span th:text="${#authentication.name}">User Name</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/login"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+
                             <li>
                                 <form method="post" th:action="@{/logout}">
                                     <button class="dropdown-item" type="submit"><i class="bi bi-box-arrow-right"></i> Logout</button>

@@ -22,13 +22,13 @@ public class CustomerController {
         return "CreateCustomer";
     }
     @RequestMapping("/saveCustomer")
-    public String saveCustomer(@ModelAttribute("customerVue") Customer customerController){
-        customerController.setCustomerState(CustomerState.Active);
+    public String saveCustomer(@ModelAttribute("customerVue") Customer customerController){ //@ModelAttribute lie les valeurs des champs du formulaire HTML
+        customerController.setCustomerState(CustomerState.Active);// un objet "customerVue"
         Customer saveCustomer = customerService.saveCustomer(customerController);
         return "CreateCustomer";
     }
     @RequestMapping("/customersList")
-    public String customersList(ModelMap modelMap){
+    public String customersList(ModelMap modelMap){  //  utilisée pour transporter des données entre un contrôleur et une vu
         List<Customer> customersController = customerService.getAllCustomers();
         modelMap.addAttribute("customersVue",customersController);
 

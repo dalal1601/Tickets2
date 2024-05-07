@@ -1,44 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<div th:replace="~{Shared/Header :: header}"></div>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-header">
-                    <h1 class="card-title">Shopping Cart</h1>
-                </div>
-                <div class="card-body">
-                    <!-- Display selected items in the cart -->
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Event Name</th>
-                            <th>Price</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="item : ${cartItems}">
-                            <td th:text="${item.eventName}"></td>
-                            <td th:text="${item.price}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- Display total price -->
-                    <div>Total Price: <span th:text="${totalPrice}"></span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div th:replace="~{Shared/Footer :: footer}"></div>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<h1>Shopping Cart</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Ticket Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the items in the cart and display them -->
+    <tr th:each="orderDetail : ${cart.orderDetailList}">
+        <td th:text="${orderDetail.ticket.ticketName}"></td>
+        <td th:text="${orderDetail.ticket.price}"></td>
+        <td th:text="${orderDetail.quantity}"></td>
+        <td th:text="${orderDetail.ticket.price * orderDetail.quantity}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2>Total Price: <span th:text="${cart.totalPrice}"></span></h2>
 </body>
 </html>

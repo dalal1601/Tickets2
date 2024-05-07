@@ -37,7 +37,7 @@ public class SecurityConfig {
                                 .loginPage("/login")
                                 .defaultSuccessUrl("/")
                 )
-               // .exceptionHandling(e->e.accessDeniedPage("accessDenied"))
+                .exceptionHandling(e->e.accessDeniedPage("/accessDenied"))
         .build();
 
     }

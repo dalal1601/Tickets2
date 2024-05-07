@@ -31,8 +31,8 @@ public class HomeController {
         List<Event> eventsController = eventService.getAllEvents();
 
         // Add the list of events to the model
-        modelMap.addAttribute("eventsVue",eventsController);
-        List<Category> categories = categoryRepository.findAll(); // Fetch all categories
+        modelMap.addAttribute("eventsVue",eventsController); //ajoute la liste d'événements (eventsController) au ModelMap avec le nom "eventsVue". Cela signifie que cette liste d'événements sera disponible pour la vue sous le nom eventsVue.
+        List<Category> categories = categoryRepository.findAll(); // Fetch all categories ,,,L'utilisation  du CategoryRepository est appropriée si le besoin est  de récupérer des données brutes à partir de la base de données, sans aucune logique métier supplémentaire.
         modelMap.addAttribute("categories", categories);
 
         // Return the view name
@@ -62,7 +62,7 @@ public class HomeController {
         return "CrudEvent";
     }
 
-    private final CategoryRepository categoryRepository; // Assuming you have a CategoryRepository
+    private final CategoryRepository categoryRepository;
 
 
     @RequestMapping("/createEvent")
