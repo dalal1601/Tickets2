@@ -66,7 +66,7 @@ public class HomeController {
 
 
     @RequestMapping("/createEvent")
-    public String createCustomer(ModelMap model){
+    public String createCustomer(ModelMap model){ //event not customer it s okkeeeeh
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("eventVue", new Event()); // Assuming you have a model attribute for the event

@@ -24,10 +24,10 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         authCustomizer -> authCustomizer
-
+                                .requestMatchers("/addToCart","/register","/home","/cart","/detailsEvent","/login","/webjars/**").permitAll()
                                 .requestMatchers("/createEvent","/editEvent","/crudEvent").hasRole("ADMIN")
                                 //.requestMatchers("/home","/detailsEvent").hasAnyRole("GUEST","ADMIN","USER")
-                                .requestMatchers("/home","/detailsEvent","/login","/webjars/**").permitAll()
+                                //.requestMatchers("/home","/detailsEvent","/login","/webjars/**").permitAll()
 
                                 .anyRequest().authenticated()
 

@@ -2,6 +2,7 @@ package com.example.tickets2.Services;
 
 
 import com.example.tickets2.Entities.Customer;
+import com.example.tickets2.Entities.OrderT;
 import com.example.tickets2.Repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,17 @@ public class CustomerServiceImpl implements  CustomerService{
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public Customer findByUsername(String username) {
+        return customerRepository.findByUsername(username);
+    }
+    // Method to get orders for a customer
+    public List<OrderT> getCustomerOrders(Customer customer) {
+        return customer.getOrderTList();
+    }
+    public Customer findCustomerById(Long id) {
+        return customerRepository.findById(id).orElse(null);
     }
 }

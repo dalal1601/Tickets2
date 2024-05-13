@@ -128,4 +128,49 @@ public class OrderServiceImpl implements OrderService{
 
         return totalPrice;
     }
+
+    @Override
+    public OrderT save(OrderT order) {
+        return orderRepository.save(order);
+    }
+
+    public OrderT findOrCreateOrder(Customer customer) {
+        // Try to find an existing order for the customer
+        OrderT order = orderRepository.findByCustomerAndOrderState(customer, OrderState.New);
+
+        // If no open order found, create a new one
+        if (order == null) {
+            order = OrderT.builder()
+                    .customer(customer)
+                    .orderState(OrderState.New)
+                    .createAt(new Date())
+                    .build();
+            order = orderRepository.save(order);
+        }
+
+        return order;
+    }
+
+    @Override
+    public void addOrderDetail(OrderDetail orderDetail) {
+        // Get the associated order from the order detail
+        OrderT order = orderDetail.getOrderT();
+
+        // Check if the order is null or closed
+        if (order == null || order.getOrderState() != OrderState.New) {
+            // Handle the case where the order is null or closed (throw an exception, log an error, etc.)
+            // For example:
+            throw new IllegalStateException("Order is null or closed");
+        }
+
+        // Add the order detail to the order
+        order.getOrderDetailList().add(orderDetail);
+
+        // Save the updated order to the database
+        orderRepository.save(order);
+    }
+
+
+
+
 }

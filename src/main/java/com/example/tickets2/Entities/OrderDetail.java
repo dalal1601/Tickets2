@@ -16,10 +16,19 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double quantity;
+    private Double totalPrice;
 
     @ManyToOne
     private Ticket ticket;
     @ManyToOne
     private OrderT orderT;
+
+    public Double getTotalPrice() {
+        return quantity * ticket.getPrice();
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
 }

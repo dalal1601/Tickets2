@@ -25,6 +25,9 @@ public class OrderT {
     private OrderState orderState = OrderState.New;
 
 
+
+
+
     @OneToMany(mappedBy = "orderT", fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetailList  = new ArrayList<>();
     @OneToMany(mappedBy = "orderT", fetch = FetchType.LAZY)

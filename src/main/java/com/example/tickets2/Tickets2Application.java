@@ -29,6 +29,8 @@ public class Tickets2Application {
             accountService.addRoleToUser("admin","GUEST");
             accountService.addRoleToUser("guest","GUEST");
 
+
+
             accountService.removeRoleFromUser("admin","GUEST");
 
              System.out.println(accountService.loadUserByUsername("admin").getEmail());

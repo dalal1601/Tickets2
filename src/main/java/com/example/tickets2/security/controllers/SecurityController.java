@@ -1,5 +1,7 @@
 package com.example.tickets2.security.controllers;
 
+import com.example.tickets2.Entities.Customer;
+import com.example.tickets2.Services.CustomerService;
 import com.example.tickets2.security.entities.Role;
 import com.example.tickets2.security.entities.User;
 import com.example.tickets2.security.reposotories.UserRepository;
@@ -17,12 +19,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.rmi.server.UID;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class SecurityController {
     private  UserRepository userRepository;
     private  PasswordEncoder passwordEncoder;
+    private  CustomerService customerService;
 
     @GetMapping("/")  //mapper les requêtes HTTP GET
     public String home(){
@@ -53,9 +60,10 @@ public class SecurityController {
 
     ///////////////////////
     @Autowired   // permet d'activer l'injection automatique de dépendance.
-    public SecurityController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public SecurityController(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomerService customerService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.customerService = customerService;
     }
 
     @GetMapping("/register")
@@ -80,15 +88,30 @@ public class SecurityController {
             return "Login"; // Return to the registration form if the username is taken
         }
 
+        // Create a new Customer object
+        Customer customer = new Customer();
+        // Set necessary properties of the Customer object from the User object
+        customer.setUsername(user.getUsername());
+        customer.setEmail(user.getEmail());
+
+
+        List<Role> roleList =new ArrayList<>();
+        Role role = new Role("USER");
+        roleList.add(role);
+        user.setRoles(roleList);
         // Encrypt the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         System.out.println("Saving user: " + user);
-
+        user.setUserId(UUID.randomUUID().toString());// from yahya s help
         // Save the user
         userRepository.save(user);
         System.out.println("User saved: " + user);
 
-        return "redirect:/login"; // Redirect to login page after successful registration
+
+        // Save the customer
+        customerService.saveCustomer(customer);
+
+        return "Login"; // Redirect to login page after successful registration
     }
 
 

@@ -1,31 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Order Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<h1>Shopping Cart</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Ticket Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Iterate over the items in the cart and display them -->
-    <tr th:each="orderDetail : ${cart.orderDetailList}">
-        <td th:text="${orderDetail.ticket.ticketName}"></td>
-        <td th:text="${orderDetail.ticket.price}"></td>
-        <td th:text="${orderDetail.quantity}"></td>
-        <td th:text="${orderDetail.ticket.price * orderDetail.quantity}"></td>
-    </tr>
-    </tbody>
-</table>
-<h2>Total Price: <span th:text="${cart.totalPrice}"></span></h2>
+<div th:replace="~{Shared/Header :: header}"></div>
+<div class="container mt-5"> <!-- Utilizing Bootstrap container class for layout -->
+    <h1 class="text-center mb-4">Cart</h1> <!-- Center align heading and add bottom margin -->
+    <table class="table"> <!-- Utilizing Bootstrap table class for styling -->
+        <thead>
+        <tr>
+            <th>Event</th>
+            <th>Price</th>
+            <th>Quantity</th> <!-- Add a new column for quantity -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderDetail, iterStat : ${orderDetails}">
+            <td th:text="${orderDetail.ticket.event.eventName}"></td>
+            <td class="order-price" th:text="${orderDetail.ticket.price}"></td>
+            <!-- Add plus and minus buttons for quantity -->
+            <td>
+                <button class="btn btn-sm btn-secondary btn-decrement">-</button>
+                <span class="quantity">1</span>
+                <button class="btn btn-sm btn-secondary btn-increment">+</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${order != null}" class="text-right"> <!-- Align total price to the right -->
+        Total Price: <span th:text="${order.getTotalPrice()}"></span>
+    </div>
+</div>
+<div th:replace="~{Shared/Footer :: footer}"></div>
+<!-- jQuery, Popper.js, Bootstrap JS -->
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        // Function to increment quantity
+        $('.btn-increment').click(function() {
+            var quantitySpan = $(this).siblings('.quantity');
+            var currentQuantity = parseInt(quantitySpan.text());
+            quantitySpan.text(currentQuantity + 1);
+        });
+
+        // Function to decrement quantity
+        $('.btn-decrement').click(function() {
+            var quantitySpan = $(this).siblings('.quantity');
+            var currentQuantity = parseInt(quantitySpan.text());
+            if (currentQuantity > 1) {
+                quantitySpan.text(currentQuantity - 1);
+            }
+        });
+    });
+</script>
+
+
+
+
 </body>
 </html>
