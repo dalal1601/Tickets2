@@ -33,10 +33,8 @@ public class OrderController {
         // Retrieve the current customer using the principal (assuming Spring Security is being used)
         String username = principal.getName();
         Customer currentCustomer = customerService.findByUsername(username);
-
         // Get the current order for the customer
         OrderT order = orderService.getCurrentOrder(currentCustomer);
-
         // Check if order is null
         if (order == null) {
             // Handle null order (maybe redirect to an error page or show a message)

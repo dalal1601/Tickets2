@@ -29,10 +29,8 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public Ticket update(Ticket ticket) {
-        // Check if the ticket exists
         Ticket existingTicket = findById(ticket.getId());
         if (existingTicket != null) {
-            // Update the existing ticket
             existingTicket.setTicket(ticket.getTicket());
             existingTicket.setPrice(ticket.getPrice());
             existingTicket.setCreateAt(ticket.getCreateAt());
@@ -57,7 +55,6 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public void deleteAllTickets() {
-        // Delete all tickets
         ticketRepository.deleteAll();
     }
 
