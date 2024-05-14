@@ -83,7 +83,7 @@
                             <h3 class="mb-3">Ticket Information</h3>
                             <div th:each="ticket : ${tickets}" class="mb-3">
                                 <p><strong>Ticket id:</strong> <span th:text="${ticket.id}"></span></p>
-                                <p><strong>Ticket Price:</strong> <span th:text="${ticket.price}"></span></p>
+                                <p><strong>Ticket Price:</strong> <span th:text="${ticket.price}"></span><strong> Dh</strong></p>
                                 <p><strong>Availability:</strong> <span th:text="${ticket.ticketState}"></span></p>
                                 <input type="hidden" name="ticketId" th:value="${ticket.id}">
                                 <input type="hidden" name="eventId" th:value="${event.id}">

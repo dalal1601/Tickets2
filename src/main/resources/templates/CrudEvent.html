@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 60px;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .btn-create {
+            margin-bottom: 20px;
+        }
+        .event-table {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .event-table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .event-table td, .event-table th {
+            vertical-align: middle !important;
+        }
+        .event-actions {
+            display: flex;
+            align-items: center;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+        /* Fixed Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+           /* background-color: #007bff; /* Header background color */
+            color: #fff; /* Header text color */
+            /*padding: 0px 0; /* Padding for top and bottom */
+            text-align: center; /* Center align text */
+            z-index: 1000; /* Ensure it stays on top of other elements */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div th:replace="~{Shared/Header :: header}"></div>
+</header>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Event Management</h1>
+
+    <a href="/createEvent" class="btn btn-success btn-create">Create Event</a>
+
+    <div class="table-responsive event-table">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Iterate over events and display each -->
+            <tr th:each="event : ${eventsVue}">
+                <td th:text="${event.eventName}"></td>
+                <td th:text="${event.dateEvent}"></td>
+                <td th:text="${event.place}"></td>
+                <td th:if="${event.category != null}" th:text="${event.category.categoryName}">Category Not Available</td>
+                <td class="event-actions">
+                    <div class="row">
+                        <div class="col">
+                            <a th:href="@{'/editEvent?id=' + ${event.id}}" class="btn btn-sm btn-primary btn-action">Edit</a>
+                        </div>
+                        <div class="col">
+                            <form method="post" action="/deleteEvent" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                <input type="hidden" name="eventId" th:value="${event.id}">
+                                <a th:href="@{'/deleteEvent?id=' + ${event.id}}" type="submit" class="btn btn-sm btn-danger btn-action">Delete</a>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <!-- End of event iteration -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
