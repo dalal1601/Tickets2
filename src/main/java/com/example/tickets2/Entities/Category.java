@@ -22,6 +22,7 @@ public class Category {
     private String categoryName;
 
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY) //à la demande,( reduire la charge sur la base)les événements ne sont chargés de manière paresseuse que lorsque cela est nécessaire.
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY) //à la demande,( reduire
+    // la charge sur la base)les événements ne sont chargés de manière paresseuse que lorsque cela est nécessaire.
     private List<Event> eventList = new ArrayList<>();
 }

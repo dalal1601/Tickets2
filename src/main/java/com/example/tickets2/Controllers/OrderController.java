@@ -2,10 +2,7 @@ package com.example.tickets2.Controllers;
 
 import com.example.tickets2.Entities.*;
 import com.example.tickets2.Enums.OrderState;
-import com.example.tickets2.Services.CustomerService;
-import com.example.tickets2.Services.EventService;
-import com.example.tickets2.Services.OrderService;
-import com.example.tickets2.Services.TicketService;
+import com.example.tickets2.Services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,9 +24,9 @@ public class OrderController {
 
     private  CustomerService customerService;
     private  OrderService orderService;
-    private TicketService ticketService;
+    private OrderDetailsService orderDetailsService;
     private EventService eventService;
-
+    private  TicketService ticketService;
 
     @GetMapping("/cart")
     public String showCart(Model model, Principal principal) {
@@ -56,7 +53,7 @@ public class OrderController {
         return "Cart";
     }
 
-    @PostMapping("/addToCart")
+   /* @PostMapping("/addToCart")
     public String addToCart(@RequestParam("eventId") Long eventId, @RequestParam("ticketId") Long ticketId, Principal principal) {
         String username = principal.getName();
         Customer currentCustomer = customerService.findByUsername(username);
@@ -81,6 +78,11 @@ public class OrderController {
 
         return "redirect:/cart"; // Redirect to the cart page after adding the ticket to the order
     }
+
+*/
+
+
+
 
 
 

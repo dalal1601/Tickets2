@@ -44,8 +44,8 @@ public class SecurityController {
         return "/Login";
     }
     @GetMapping("/profile")
-    public String profile(org.springframework.security.core.Authentication authentication, ModelMap modelMap) {
-        if (authentication != null && authentication.isAuthenticated()) {
+    public String profile(org.springframework.security.core.Authentication authentication, ModelMap modelMap) { //modelmap pour transmettre des données du contrôleur à la vue.
+        if (authentication != null && authentication.isAuthenticated()) { //permet d'injecter l'objet Authentication
             String username = "Guest"; // Default username if not authenticated
             Object principal = authentication.getPrincipal();
             if (principal instanceof UserDetails) { //Cette condition permet de s'assurer que l'utilisateur s'est authentifié correctement.
